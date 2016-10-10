@@ -92,7 +92,7 @@ android {
          * so we can get the newly git version easily!
          */
         buildConfigField "String", "CLIENTVERSION", "\"${gitSha()}\""
-        buildConfigField "String", "PLATFORM",  "\"all\""
+        buildConfigField "String", "PLATFORM", "\"all\""
     }
 //    //use to test flavors support
 //    productFlavors {
@@ -120,6 +120,7 @@ android {
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
+            assets.srcDirs = ['src/main/assets', 'src/main/assets/']
         }
     }
 }
@@ -335,11 +336,9 @@ if (buildWithTinker()) {
         }
     }
 
-
-
     /**
-    * bak apk and mapping
-    */
+     * bak apk and mapping
+     */
     android.applicationVariants.all { variant ->
         /**
          * task type, you want to bak

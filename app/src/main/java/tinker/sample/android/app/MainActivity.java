@@ -16,18 +16,23 @@
 
 package tinker.sample.android.app;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.LayoutRes;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +40,11 @@ import com.tencent.tinker.lib.tinker.Tinker;
 import com.tencent.tinker.lib.tinker.TinkerInstaller;
 import com.tencent.tinker.loader.shareutil.ShareConstants;
 import com.tencent.tinker.loader.shareutil.ShareTinkerInternals;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import tinker.sample.android.R;
 import tinker.sample.android.util.Utils;
@@ -101,6 +111,159 @@ public class MainActivity extends AppCompatActivity {
                 showInfo(MainActivity.this);
             }
         });
+
+        //测试补丁
+        //testPatchForAddRes();
+        //testPatchForAddClazz(MyNewClazz.class);
+        //testPatchForInnerStaticClazz(InnerStaticMyClazz.class);
+        //testPatchForInnerClazz(InnerMyClazz.class);
+        testPatchForAsset("channel.txt");
+    }
+
+
+    /**
+     * warning must use in non-ui thread for the long time read fileStream
+     * @param fileName
+     */
+    private void  testPatchForAsset(String fileName) {
+
+        Tinker tinker = Tinker.with(getApplicationContext());
+        if (!tinker.isTinkerLoaded()) {
+            return;
+        }
+
+        AssetManager assets = getAssets();
+        BufferedReader bufferedReader = null;
+        StringBuilder stringBuilder = new StringBuilder();
+
+        try {
+            bufferedReader  =  new BufferedReader(new InputStreamReader(assets.open(fileName)));
+
+            String line ;
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line);
+
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        addCode("开始:");
+        addCode(stringBuilder.toString());
+
+        addCode("结束!");
+
+
+    }
+
+    private void testPatchForInnerClazz(Class<InnerMyClazz> innerMyClazzClass) {
+        Tinker tinker = Tinker.with(getApplicationContext());
+        if (!tinker.isTinkerLoaded()) {
+            return;
+        }
+
+        addCode("开始:");
+
+        InnerMyClazz obj = new InnerMyClazz("i am mary", 654321);
+        addCode(obj.toString());
+        addCode("结束!");
+
+    }
+
+
+    private void testPatchForInnerStaticClazz(Class innerClazz) {
+        Tinker tinker = Tinker.with(getApplicationContext());
+        if (!tinker.isTinkerLoaded()) {
+            return;
+        }
+
+
+
+            addCode("开始:");
+
+        InnerStaticMyClazz obj = new InnerStaticMyClazz("i am hugo", 123456);
+            addCode(obj.toString());
+            addCode("结束!");
+
+
+    }
+
+    private void testPatchForAddClazz(Class clazz) {
+
+
+        Tinker tinker = Tinker.with(getApplicationContext());
+        if (!tinker.isTinkerLoaded()) {
+            return;
+        }
+
+        try {
+
+            addCode("开始:");
+/*            Constructor constructor = clazz.getConstructor(String.class, Integer.class);
+            Object o = constructor.newInstance("i am hugo", 123456);*/
+            MyNewClazz obj = new MyNewClazz("i am hugo", 123456);
+            addCode(obj.toString());
+            addCode("结束!");
+
+        } catch ( Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void testPatchForAddRes() {
+
+        Tinker tinker = Tinker.with(getApplicationContext());
+        if (tinker.isTinkerLoaded()) {
+            addRes(MainActivity.this, R.layout.item_main);
+        }
+
+    }
+
+    private void testPatchForAddMethod() {
+        Tinker tinker = Tinker.with(getApplicationContext());
+        if (tinker.isTinkerLoaded()) {
+            addCode("add method  code from patch" );
+        }
+
+    }
+
+    public class InnerMyClazz{
+        public String name ;
+        public int id ;
+
+        public InnerMyClazz(String name, int id) {
+            this.name = name;
+            this.id = id;
+        }
+
+        @Override
+        public String toString() {
+            return "InnerMyClazz{" +
+                    "name='" + name + '\'' +
+                    ", id=" + id +
+                    '}';
+        }
+    }
+    public static class InnerStaticMyClazz {
+        public String name;
+        public int id;
+        public InnerStaticMyClazz(String name , int id){
+            this.name = name;
+            this.id = id;
+
+        }
+
+        @Override
+        public String toString() {
+            return "InnerStaticMyClazz{" +
+                    "name='" + name + '\'' +
+                    ", id=" + id +
+                    '}';
+        }
     }
 
     public boolean showInfo(Context context) {
@@ -140,12 +303,7 @@ public class MainActivity extends AppCompatActivity {
         final AlertDialog alert = builder.create();
         alert.show();
 
-        //add code
 
-        if (tinker.isTinkerLoaded()) {
-            addCode("patch for add method code !");
-        }
-        //add code
         return true;
     }
 
@@ -161,6 +319,22 @@ public class MainActivity extends AppCompatActivity {
 
     public void addCode(String addMes) {
         Toast.makeText(this, addMes, Toast.LENGTH_SHORT).show();
+    }
+
+    public void addRes(Activity context, @LayoutRes int layoutId) {
+        FrameLayout contentView = (FrameLayout)context.findViewById(android.R.id.content);
+
+        View inflate = LayoutInflater.from(context).inflate(layoutId, null, false);
+
+        ((TextView) inflate.findViewById(R.id.tv_from_patch)).setText("patch res id:"+R.id.tv_from_patch);
+        contentView.addView(inflate, new FrameLayout.LayoutParams(-1, -2, Gravity.BOTTOM));
+
+       // addCode("patch for add method code ---end");
+/*        TextView tv = new TextView(MainActivity.this);
+
+        tv.setId(View.generateViewId());
+        tv.setText("i am new view with id ");*/
+
     }
 
     @Override
