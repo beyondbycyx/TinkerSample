@@ -1,0 +1,26 @@
+
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.2.0'
+        classpath "com.tencent.tinker:tinker-patch-gradle-plugin:${TINKER_VERSION}"
+    }
+}
+
+allprojects {
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+}
+
+
+/*
+println "build.gradle : In posdevice, gradle id is " + gradle.hashCode()
+println "build.gradle : Home Dir:" + gradle.gradleHomeDir
+println "build.gradle : User Home Dir:" + gradle.gradleUserHomeDir
+println "build.gradle : Parent: " + gradle.parent
+*/
