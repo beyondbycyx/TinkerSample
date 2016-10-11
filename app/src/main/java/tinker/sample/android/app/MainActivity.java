@@ -56,7 +56,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Log.e(TAG, "i am on onCreate classloader:" + MainActivity.class.getClassLoader().toString());
+
         //test resource change
         Log.e(TAG, "i am on onCreate string:" + getResources().getString(R.string.test_resource));
 //        Log.e(TAG, "i am on patch onCreate");
@@ -118,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
         //testPatchForInnerStaticClazz(InnerStaticMyClazz.class);
         //testPatchForInnerClazz(InnerMyClazz.class);
         testPatchForAsset("channel.txt");
+
     }
 
 
@@ -342,4 +345,6 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         Utils.setBackground(true);
     }
+
+
 }

@@ -1,4 +1,4 @@
-include ':app'
+include ':app', ':mypluginapp'
 
 /*
 println "In posdevice, gradle id is " + gradle.hashCode()
