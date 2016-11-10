@@ -1,3 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MyPluginApp</string>
+
+    <string name="app_name">汇元商城</string>
+    <string name="pay">客户端支付</string>
+    <string name="init">启动支付</string>
+    <string name="query">查询订单</string>
+
 </resources>

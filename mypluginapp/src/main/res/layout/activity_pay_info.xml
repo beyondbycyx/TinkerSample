@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/BgColor" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <include layout="@layout/activity_business_title" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/free_trainer" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp" >
+
+            <TextView
+                android:id="@+id/tv_product_name_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="商品名称："
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/tv_product_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_product_name_title"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:text="虚拟测试产品 "
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+
+            <TextView
+                android:id="@+id/tv_product_price_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_product_name"
+                android:layout_marginTop="10dp"
+                android:text="商品价格："
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_product_price_title"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:text="￥0.10"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/bt_buy"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/login_btn_selector"
+            android:padding="8dp"
+            android:text="确认购买"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+</ScrollView>

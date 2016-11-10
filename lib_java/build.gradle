@@ -1,0 +1,28 @@
+apply plugin: 'java'
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile group: 'com.squareup.retrofit2', name: 'retrofit', version: '2.0.1'
+
+    runtime group: 'com.squareup.retrofit2', name: 'retrofit', version: '2.0.1',
+            transitive: false
+}
+
+sourceSets {
+
+    main {
+        java {
+            srcDirs = ['src/java']
+
+        }
+
+        resources {
+            srcDirs = ['src/resources']
+
+        }
+    }
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"

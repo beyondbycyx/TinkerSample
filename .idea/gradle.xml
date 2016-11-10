@@ -9,6 +9,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/lib_hfb_pay" />
+            <option value="$PROJECT_DIR$/lib_java" />
             <option value="$PROJECT_DIR$/mypluginapp" />
           </set>
         </option>

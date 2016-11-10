@@ -121,6 +121,12 @@ public class MainActivity extends AppCompatActivity {
         //testPatchForInnerClazz(InnerMyClazz.class);
         testPatchForAsset("channel.txt");
 
+        testForInstanceRun();
+    }
+
+    private void testForInstanceRun() {
+
+        int i  = 800000;
     }
 
 

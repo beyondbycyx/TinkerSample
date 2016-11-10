@@ -10,6 +10,11 @@ dependencies {
     compile("com.tencent.tinker:tinker-android-anno:${TINKER_VERSION}") { changing = true }
     compile "com.android.support:multidex:1.0.1"
 
+    compile project(':lib_java')
+    //compile group: 'com.squareup.retrofit2', name: 'retrofit', version: '2.0.1'
+
+
+
     //use for local maven test
 //    compile("com.tencent.tinker:tinker-android-loader:${TINKER_VERSION}") { changing = true }
 //    compile("com.tencent.tinker:aosp-dexutils:${TINKER_VERSION}") { changing = true }
@@ -123,6 +128,8 @@ android {
             assets.srcDirs = ['src/main/assets', 'src/main/assets/']
         }
     }
+
+
 }
 
 def bakPath = file("${buildDir}/bakApk/")

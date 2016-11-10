@@ -5,8 +5,12 @@ buildscript {
         jcenter()
     }
     dependencies {
+
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.1-2"
         classpath 'com.android.tools.build:gradle:2.2.0'
         classpath "com.tencent.tinker:tinker-patch-gradle-plugin:${TINKER_VERSION}"
+
+
     }
 }
 
@@ -17,10 +21,14 @@ allprojects {
     }
 }
 
+task clean(type: Delete) {
 
-/*
+    delete rootProject.buildDir
+}
+
+
+
 println "build.gradle : In posdevice, gradle id is " + gradle.hashCode()
 println "build.gradle : Home Dir:" + gradle.gradleHomeDir
 println "build.gradle : User Home Dir:" + gradle.gradleUserHomeDir
 println "build.gradle : Parent: " + gradle.parent
-*/
